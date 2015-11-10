@@ -1,0 +1,46 @@
+---
+
+# s3 bucket where Installers are located [default: None]
+s3bucket: "ellucian-drafts"
+
+# destination on windows target where Installers must be downloaded
+installers_destination: "C:\\Installers"
+
+# s3 folder name where installers are located [default: None]
+sql_installers: "SQL"
+
+# domain user
+runAsUser: "ecrm\\sqlservice"
+
+# domain user pwd
+runAsPassword: "R3cruit3r"
+
+# features to install
+sqlFeatures: '\"SQLENGINE,FULLTEXT,SSMS,ADV_SSMS,RS\"'
+
+# install dir
+installSharedDrive: "D"
+
+# install dir 64-bit
+installSharedWOWDrive: "D"
+
+instanceDrive: "D"
+
+adminUser: "ecrm\\sqlservice"
+
+adminPassword: "R3cruit3r"
+
+# sql sys admin
+sqlSysAdminAccts: "ecrm\\sqlservice"
+
+saPassword: "R3cruit3r"
+
+sqlUserDBLogDrive: "L"
+
+sqlTempDBDrive: "T"
+
+# named instance
+newinstanceName: "MSSQLSERVER"
+
+# sql sys admin
+usersToAdd: "ecrm\\crmadmin"

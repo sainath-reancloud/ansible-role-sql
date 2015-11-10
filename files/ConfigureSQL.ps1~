@@ -1,0 +1,10 @@
+Param(
+[string]$sysFQDN,
+[string]$runAsUser,
+[string]$runAsPassword,
+[string]$sqlServerInstance
+)
+
+$scriptargs = @($sqlServerInstance)
+
+C:\Installers\RunScriptAsUser.ps1 $runAsUser $runAsPassword $sysFQDN C:\installers\RunSQLInstall_dynamic.ps1 $scriptargs

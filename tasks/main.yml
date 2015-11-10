@@ -1,0 +1,76 @@
+---
+
+- name: Create Installers directory if not present
+  script: Dir.ps1
+
+- name: Download Required Installation Files
+  script: DownloadObjects.ps1 {{s3bucket}} {{sql_installers}} "{{installers_destination}}"
+
+- name: Install .Net Framework
+  win_feature:
+    name: "NET-Framework-Core"
+    state: present
+    restart: no
+    include_sub_features: yes
+    include_management_tools: yes
+
+- name: Create Installer File
+  script: CreateSQLInstall.ps1 "{{sqlFeatures}}" {{installSharedDrive}} {{installSharedWOWDrive}} {{instanceDrive}} "{{adminUser}}" {{adminPassword}} "{{sqlSysAdminAccts}}" {{saPassword}} {{sqlUserDBLogDrive}} {{sqlTempDBDrive}} {{newinstanceName}}
+
+- name: Create task
+  script: CreateTask.ps1
+
+- name: Reboot Windows
+  raw: shutdown -r -f
+
+- name: wait for windows system reboot
+  local_action:
+    module: wait_for
+    host: "{{ ansible_ssh_host|default(inventory_hostname) }}"
+    port: "{{ ansible_ssh_port|default(5985) }}"
+    delay: 90
+    timeout: 600
+    state: started
+
+- name: Wait Until Installation is Complete
+  script: TaskStatus.ps1
+
+- name: Enable Ports for Remote SQL Connection
+  script: EnablePorts.ps1
+
+- name: Reboot Windows
+  raw: shutdown -r -f
+
+- name: wait for windows system reboot
+  local_action:
+    module: wait_for
+    host: "{{ ansible_ssh_host|default(inventory_hostname) }}"
+    port: "{{ ansible_ssh_port|default(5985) }}"
+    delay: 90
+    timeout: 600
+    state: started
+
+- name: Configure SQL Server and Add User to SysAdmin Role
+  script: AddUserToSysAdmin.ps1 "{{runAsUser}}" {{runAsPassword}} "{{usersToAdd}}"
+
+- name: Reboot Windows
+  raw: shutdown -r -f
+
+- name: wait for windows system reboot
+  local_action:
+    module: wait_for
+    host: "{{ ansible_ssh_host|default(inventory_hostname) }}"
+    port: "{{ ansible_ssh_port|default(5985) }}"
+    delay: 90
+    timeout: 600
+    state: started
+
+- name: Verify SQL Server Installation
+  script: VerifySQL.ps1
+
+- name: Verify SQL Server RS Installation
+  script: VerifySQL_RS.ps1
+
+
+
+
