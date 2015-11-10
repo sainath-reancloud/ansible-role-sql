@@ -18,7 +18,7 @@
   script: CreateSQLInstall.ps1 "{{sqlFeatures}}" {{installSharedDrive}} {{installSharedWOWDrive}} {{instanceDrive}} "{{adminUser}}" {{adminPassword}} "{{sqlSysAdminAccts}}" {{saPassword}} {{sqlUserDBLogDrive}} {{sqlTempDBDrive}} {{newinstanceName}}
 
 - name: Create task
-  script: CreateTask.ps1 "{{runAsUser}}"
+  script: CreateTask.ps1 "{{runAsUser}}" {{runAsPassword}}
 
 - name: Reboot Windows
   raw: shutdown -r -f
