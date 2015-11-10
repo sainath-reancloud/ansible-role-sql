@@ -9,8 +9,11 @@ installers_destination: "C:\\Installers"
 # s3 folder name where installers are located [default: None]
 sql_installers: "SQL"
 
+# dnetBIOS
+dnetBIOS: 
+
 # domain user
-runAsUser: "greatvalleyu\\sqlservice"
+runAsUser: "{{dnetBIOS}}\\sqlservice"
 
 # domain user pwd
 runAsPassword: "R3cruit3r"
@@ -26,12 +29,12 @@ installSharedWOWDrive: "D"
 
 instanceDrive: "D"
 
-adminUser: "greatvalleyu\\sqlservice"
+adminUser: "ecrm\\sqlservice"
 
 adminPassword: "R3cruit3r"
 
 # sql sys admin
-sqlSysAdminAccts: "greatvalleyu\\sqlservice"
+sqlSysAdminAccts: "ecrm\\sqlservice"
 
 saPassword: "R3cruit3r"
 
@@ -43,4 +46,4 @@ sqlTempDBDrive: "T"
 newinstanceName: "MSSQLSERVER"
 
 # sql sys admin
-usersToAdd: "greatvalleyu\\crmadmin"
+usersToAdd: "ecrm\\crmadmin"
