@@ -15,7 +15,7 @@
     include_management_tools: yes
 
 - name: Create Installer File
-  script: CreateSQLInstall.ps1 "{{sqlFeatures}}" {{installSharedDrive}} {{installSharedWOWDrive}} {{instanceDrive}} "{{adminUser}}" {{adminPassword}} "{{sqlSysAdminAccts}}" {{saPassword}} {{sqlUserDBLogDrive}} {{sqlTempDBDrive}} {{newinstanceName}}
+  script: CreateSQLInstall.ps1 "{{sqlFeatures}}" {{installSharedDrive}} {{installSharedWOWDrive}} {{instanceDrive}} "{{adminUser}}" {{adminPassword}} "{{sqlSysAdminAccts}}" {{saPassword}} {{sqlUserDBLogDrive}} {{sqlTempDBDrive}} {{newinstanceName}} {{primaryReplica}}
 
 - name: Create task
   script: CreateTask.ps1 "{{runAsUser}}" {{runAsPassword}}
@@ -50,8 +50,14 @@
     timeout: 600
     state: started
 
-- name: Configure SQL Server and Add User to SysAdmin Role
-  script: AddUserToSysAdmin.ps1 "{{runAsUser}}" {{runAsPassword}} "{{usersToAdd}}"
+- name: Add CrmAdmin User to SysAdmin Role
+  script: AddUserToSysAdmin.ps1 "{{runAsUser}}" {{runAsPassword}} "{{crmAdminUser}}"
+
+- name: Add CrmService User to SysAdmin Role
+  script: AddUserToSysAdmin.ps1 "{{runAsUser}}" {{runAsPassword}} "{{crmServiceUser}}"
+
+- name: Run Optimization Queries
+  script: OptimizationQueries.ps1 "{{runAsUser}}" {{runAsPassword}}
 
 - name: Reboot Windows
   raw: shutdown -r -f
@@ -67,9 +73,6 @@
 
 - name: Verify SQL Server Installation
   script: VerifySQL.ps1
-
-- name: Verify SQL Server RS Installation
-  script: VerifySQL_RS.ps1
 
 
 

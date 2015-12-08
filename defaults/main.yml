@@ -19,15 +19,15 @@ runAsUser: "{{dnetBIOS}}\\sqlservice"
 runAsPassword: "R3cruit3r"
 
 # features to install
-sqlFeatures: '\"SQLENGINE,FULLTEXT,SSMS,ADV_SSMS,RS\"'
+sqlFeatures: "'SQLENGINE,FULLTEXT,SSMS,ADV_SSMS,RS'"
 
 # install dir
-installSharedDrive: "D"
+installSharedDrive: "C"
 
 # install dir 64-bit
-installSharedWOWDrive: "D"
+installSharedWOWDrive: "C"
 
-instanceDrive: "D"
+instanceDrive: "C"
 
 adminUser: "{{dnetBIOS}}\\sqlservice"
 
@@ -38,12 +38,15 @@ sqlSysAdminAccts: "{{dnetBIOS}}\\sqlservice"
 
 saPassword: "R3cruit3r"
 
-sqlUserDBLogDrive: "L"
+sqlUserDBLogDrive: "C"
 
-sqlTempDBDrive: "T"
+sqlTempDBDrive: "C"
 
 # named instance
 newinstanceName: "MSSQLSERVER"
 
-# sql sys admin
-usersToAdd: "{{dnetBIOS}}\\crmadmin"
+# sql sys admin users
+crmAdminUser: "{{dnetBIOS}}\\crmadmin"
+crmServiceUser: "{{dnetBIOS}}\\crmservice"
+
+primaryReplica: "true"

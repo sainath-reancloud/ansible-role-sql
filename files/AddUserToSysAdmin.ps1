@@ -19,7 +19,7 @@ Invoke-Command -Session $session -ScriptBlock {
         [string]$user
     )
 
-    Add-Type -Path 'C:\Program Files (x86)\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Smo.dll'
+    [System.Reflection.Assembly]::LoadWithPartialName("Microsoft.SqlServer.SMO") | out-null
      
     Function Add-WindowsAccountToSQLRole ([String]$Server, [String] $User, [String]$Role){
      
